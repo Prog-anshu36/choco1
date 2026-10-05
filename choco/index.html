@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#ffe3e7">
+    <title>Birthday Heart Animation </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="file/default.css">
+    <script type="text/javascript" src="file/jquery.min.js"></script>
+    <script type="text/javascript" src="file/jscex.min.js"></script>
+    <script type="text/javascript" src="file/jscex-parser.js"></script>
+    <script type="text/javascript" src="file/jscex-jit.js"></script>
+    <script type="text/javascript" src="file/jscex-builderbase.min.js"></script>
+    <script type="text/javascript" src="file/jscex-async.min.js"></script>
+    <script type="text/javascript" src="file/jscex-async-powerpack.min.js"></script>
+    <script type="text/javascript" src="file/function.js" charset="utf-8"></script>
+    <script type="text/javascript" src="file/love.js" charset="utf-8"></script>
+    <script>
+        function playAudio() {
+            var audio = document.getElementById("myAudio");
+            audio.play();
+        }
+
+        // Fits the fixed 1100x680 stage to any screen (phone/tablet/desktop)
+        // by scaling it visually. The canvas itself is never resized, so the
+        // drawing math inside the animation stays exactly the same.
+        window.__stageScale = 1;
+        window.__reserveTop = Math.round(Math.min(190, window.innerHeight * 0.26));
+        window.addEventListener('resize', function () { window.__reserveTop = Math.round(Math.min(190, window.innerHeight * 0.26)); });
+        function fitStageToScreen() {
+            var wrap = document.getElementById('wrap');
+            if (!wrap) return;
+            var stageWidth = 640, stageHeight = 680;
+            var padding = 6;
+            var availW = window.innerWidth - padding * 2;
+            var availH = window.innerHeight - padding * 2 - (window.__reserveTop || 0) - 44;
+            var scale = Math.min(availW / stageWidth, availH / stageHeight, 1.6);
+            window.__stageScale = scale;
+            wrap.style.transform = 'scale(' + scale + ')';
+            var m = document.getElementById('main');
+            m.style.boxSizing = 'border-box';
+            m.style.paddingTop = (window.__reserveTop || 0) + 'px';
+            m.style.paddingBottom = '44px';
+        }
+
+        window.addEventListener('resize', fitStageToScreen);
+        window.addEventListener('orientationchange', function () {
+            setTimeout(fitStageToScreen, 100);
+        });
+        document.addEventListener('DOMContentLoaded', fitStageToScreen);
+        // music: try right away, else start on first tap
+        document.addEventListener('DOMContentLoaded', function () {
+            var a = document.getElementById('myAudio');
+            var p = a.play(); if (p && p.catch) p.catch(function () {});
+            var once = function () { a.play(); document.removeEventListener('touchstart', once); document.removeEventListener('click', once); };
+            document.addEventListener('touchstart', once); document.addEventListener('click', once);
+        });
+    </script>
+</head>
+
+<body>
+    <div id="main">
+        <div id="error"><a
+                href="http://www.google.cn/chrome/intl/zh-CN/landing_chrome.html?hl=zh-CN&brand=CHMI">Chrome</a> (<a
+                href="http://firefox.com.cn/download/">Firefox</a>)</div>
+        <audio autoplay="autoplay" height="100" width="100" id="myAudio">
+            <source src="aud.mp3" type="audio/mp3" />
+            <embed height="100" width="100" src="aud.mp3" />
+        </audio>
+        <div id="title">
+            <div class="kicker">(There is no proposal, no expectation, nothing complicated)</div>
+            <h1>Bhavya ohhh sorry 🙈 Choco.</h1>
+        </div>
+        <div id="stage-viewport">
+            <div id="wrap">
+                <canvas id="canvas" width="1100" height="680"></canvas>
+                <canvas id="petals" width="1100" height="680"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div id="hint">Just read this once. That's all.<span>↓</span></div>
+
+    <section id="letter">
+        <div class="inner">
+            <h1 class="rv">I want to tell you something.</h1>
+            <p class="rv">This is something I've wanted to tell you for about a year.</p>
+            <p class="rv">I kept thinking that if I didn't tell you, someday I might regret not saying it.</p>
+            <p class="rv">And with only a few months left before everyone starts going their own way, I thought maybe I should just say it.</p>
+            <hr>
+            <h2 class="rv">Not a proposal.<br>Not a question.<br>Not an expectation.</h2>
+            <hr>
+            <p class="small rv">I'm not here to make this dramatic or turn it into something it isn't. I just don't like leaving things unsaid when they genuinely matter to me.</p>
+            <div class="keep rv">keep going ↓</div>
+            <div class="clar">
+                <div class="kick rv">04 / One clarification</div>
+                <h4 class="rv">You have always seen me as I am.</h4>
+                <div class="short rv"></div>
+                <p class="rv">I don't really do flattery. I don't want to describe how beautiful you are, how perfect you are, or give you some dramatic speech.</p>
+                <p class="rv">That's not how I talk, and you already know that.</p>
+                <p class="rv">All the jokes, incidents, fun, teasing, conversations, and everything else simply made me realize that somewhere along the way, I started liking you.</p>
+                <p class="rv">I'm saying it because I wanted to say it. That's all.</p>
+                <p class="rv">What you think about it is completely your choice. I'm not asking you for anything.</p>
+                <p class="small rv">Also, please don't hit me. I don't enjoy violence. Thank you for your cooperation.</p>
+            </div>
+            <h3 class="rv">dekho thakur hu jyada gir nahi sakta 😊</h3>
+            <div class="fin">
+                <div class="kick rv">06 / Finally</div>
+                <h5 class="rv">I genuinely, genuinely, with due respect and respectful intentions, want to say one thing</h5>
+                <div class="big rv">I like you.</div>
+                <p class="hi rv">और हाँ, मार-पीट नहीं होनी चाहिए।</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        (function () {
+            var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {
+                es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+            }, { threshold: 0.15 }) : null;
+            [].forEach.call(document.querySelectorAll('.rv'), function (el) { io ? io.observe(el) : el.classList.add('in'); });
+        })();
+    </script>
+    <script>
+        // Falling petals from the blossom cloud
+        window.startPetals = function () {
+            if (window.__petals) return; window.__petals = 1;
+            var c = document.getElementById('petals'), x = c.getContext('2d');
+            var pal = ['#ffd6e0', '#ffc2d1', '#ffb3c6', '#ff8fab', '#fff0f3'], P = [];
+            function spawn(p, first) {
+                p.x = 230 + Math.random() * 640; p.y = first ? 90 + Math.random() * 560 : 90 + Math.random() * 300 - 60;
+                p.s = 5 + Math.random() * 6; p.vy = 0.5 + Math.random() * 0.8; p.sw = 0.6 + Math.random() * 1.2;
+                p.ph = Math.random() * 6.3; p.r = Math.random() * 6.3; p.vr = (Math.random() - 0.5) * 0.05;
+                p.c = pal[(Math.random() * pal.length) | 0]; p.a = 0.6 + Math.random() * 0.4; return p;
+            }
+            for (var i = 0; i < 46; i++) P.push(spawn({}, true));
+            (function tick() {
+                x.clearRect(0, 0, 1100, 680);
+                P.forEach(function (p) {
+                    p.y += p.vy; p.ph += 0.025; p.r += p.vr; p.x += Math.sin(p.ph) * p.sw;
+                    if (p.y > 690) spawn(p, false);
+                    x.save(); x.translate(p.x, p.y); x.rotate(p.r); x.scale(Math.abs(Math.cos(p.ph * 1.3)) * 0.7 + 0.3, 1);
+                    x.globalAlpha = p.a; x.fillStyle = p.c; x.beginPath();
+                    x.moveTo(0, -p.s); x.bezierCurveTo(p.s * 0.9, -p.s * 0.6, p.s * 0.7, p.s * 0.7, 0, p.s);
+                    x.bezierCurveTo(-p.s * 0.7, p.s * 0.7, -p.s * 0.9, -p.s * 0.6, 0, -p.s); x.fill(); x.restore();
+                });
+                requestAnimationFrame(tick);
+            })();
+        };
+    </script>
+    <script>
+        (function () {
+            var canvas = $('#canvas');
+
+            if (!canvas[0].getContext) {
+                $("#error").show();
+                return false;
+            }
+
+            var width = canvas.width();
+            var height = canvas.height();
+            canvas.attr("width", width);
+            canvas.attr("height", height);
+
+            var opts = {
+                seed: {
+                    x: width / 2 - 20,
+                    color: "rgb(190, 26, 37)",
+                    scale: 2
+                },
+                branch: [
+                    [535, 680, 570, 250, 500, 200, 30, 100, [
+                        [540, 500, 455, 417, 340, 400, 13, 100, [
+                            [450, 435, 434, 430, 394, 395, 2, 40]
+                        ]],
+                        [550, 445, 600, 356, 680, 345, 12, 100, [
+                            [578, 400, 648, 409, 661, 426, 3, 80]
+                        ]],
+                        [539, 281, 537, 248, 534, 217, 3, 40],
+                        [546, 397, 413, 247, 328, 244, 9, 80, [
+                            [427, 286, 383, 253, 371, 205, 2, 40],
+                            [498, 345, 435, 315, 395, 330, 4, 60]
+                        ]],
+                        [546, 357, 608, 252, 678, 221, 6, 100, [
+                            [590, 293, 646, 277, 648, 271, 2, 80]
+                        ]]
+                    ]]
+                ],
+                bloom: {
+                    num: 900,
+                    width: 1080,
+                    height: 650,
+                },
+                footer: {
+                    width: 1200,
+                    height: 5,
+                    speed: 10,
+                }
+            }
+
+            var tree = new Tree(canvas[0], width, height, opts);
+            var seed = tree.seed;
+            var foot = tree.footer;
+            var hold = 0;
+
+            function pointFromEvent(e) {
+                var offset = canvas.offset(), s = window.__stageScale || 1;
+                var pageX = e.pageX, pageY = e.pageY;
+                if ((pageX === undefined || pageY === undefined) && e.originalEvent && e.originalEvent.touches && e.originalEvent.touches.length) {
+                    pageX = e.originalEvent.touches[0].pageX;
+                    pageY = e.originalEvent.touches[0].pageY;
+                }
+                return {
+                    x: (pageX - offset.left) / s,
+                    y: (pageY - offset.top) / s
+                };
+            }
+
+            function handleActivate(e) {
+                playAudio();
+                var p = pointFromEvent(e);
+                if (seed.hover(p.x, p.y)) {
+                    hold = 0;
+                    canvas.unbind("click touchstart");
+                    canvas.unbind("mousemove");
+                    canvas.removeClass('hand');
+                }
+            }
+
+            canvas.on('click touchstart', function (e) {
+                
+                handleActivate(e);
+            }).mousemove(function (e) {
+                var p = pointFromEvent(e);
+                canvas.toggleClass('hand', seed.hover(p.x, p.y));
+            });
+
+            var seedAnimate = eval(Jscex.compile("async", function () {
+                // No seed / "Click Me" part: go straight to the tree
+                while (foot.length < foot.width) {
+                    foot.draw();
+                    $await(Jscex.Async.sleep(10));
+                }
+            }));
+
+            var growAnimate = eval(Jscex.compile("async", function () {
+                do {
+                    tree.grow();
+                    $await(Jscex.Async.sleep(10));
+                } while (tree.canGrow());
+            }));
+
+            var flowAnimate = eval(Jscex.compile("async", function () {
+                do {
+                    tree.flower(2);
+                    $await(Jscex.Async.sleep(10));
+                } while (tree.canFlower());
+            }));
+
+            var moveAnimate = eval(Jscex.compile("async", function () {
+                // tree stays centered; nothing else appears after it
+                $await(Jscex.Async.sleep(10));
+            }));
+
+            var runAsync = eval(Jscex.compile("async", function () {
+                $await(seedAnimate());
+                $await(growAnimate());
+                $await(flowAnimate());
+                $await(moveAnimate());
+                if (window.startPetals) window.startPetals();
+                $("#title").addClass("show");
+            }));
+
+            runAsync().start();
+        })();
+    </script>
+</body>
+
+</html>

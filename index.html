@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#252432">
+  <title>Glowing Animated Login Form </title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+<div class="box">
+  <div class="login">
+    <div class="loginBx">
+      <h2>
+        <i class="fa-solid fa-key"></i>
+          Verify
+        <i class="fa-solid fa-heart"></i>
+      </h2>
+      <p class="q">Name 3 words Aditya uses the most</p>
+      <form id="f" autocomplete="off">
+        <input type="text" id="w1" placeholder="Word 1" autocapitalize="none" required>
+        <input type="text" id="w2" placeholder="Word 2" autocapitalize="none" required>
+        <input type="text" id="w3" placeholder="Word 3" autocapitalize="none" required>
+        <input type="submit" value="Unlock" />
+      </form>
+      <div class="msg" id="msg"></div>
+    </div>
+  </div>
+</div>
+<script>
+  var ANSWERS = ["choco", "bhavya", "massive", "tasty","Choco", "Bhavya", "Massive", "Tasty"];
+  document.getElementById("f").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var seen = {}, score = 0;
+    ["w1","w2","w3"].forEach(function (id) {
+      var v = document.getElementById(id).value.trim().toLowerCase();
+      if (ANSWERS.indexOf(v) > -1 && !seen[v]) { seen[v] = 1; score++; }
+    });
+    var m = document.getElementById("msg");
+    if (score >= 2) {
+      location.href = "choco/index.html";
+    } else {
+      m.style.color = "#ff2770"; m.textContent = "Not quite, try again 😉";
+    }
+  });
+</script>
+</body>
+</html>

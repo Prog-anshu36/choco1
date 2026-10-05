@@ -1,0 +1,208 @@
+html, body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255,182,193,0.55) 0%, rgba(255,182,193,0) 40%),
+    radial-gradient(circle at 88% 15%, rgba(255,160,180,0.45) 0%, rgba(255,160,180,0) 42%),
+    radial-gradient(circle at 15% 85%, rgba(255,190,200,0.5) 0%, rgba(255,190,200,0) 45%),
+    radial-gradient(circle at 90% 88%, rgba(255,150,170,0.4) 0%, rgba(255,150,170,0) 45%),
+    linear-gradient(160deg, #fff0f2 0%, #ffdfe4 45%, #ffc9d2 100%);
+  background-color: #ffdfe4;
+  color: white;
+  font-size: 14px;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+a {
+  color: black;
+  font-size: 14px;
+}
+#main {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Outer viewport frame: sized by JS to the visible area, keeps the
+   1100x680 stage centered and scaled to fit any screen. */
+#main::before,
+#main::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(2px);
+  z-index: 0;
+}
+#main::before {
+  width: 140px;
+  height: 140px;
+  top: 8%;
+  left: 6%;
+  background: radial-gradient(circle, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 70%);
+}
+#main::after {
+  width: 220px;
+  height: 220px;
+  bottom: 6%;
+  right: 5%;
+  background: radial-gradient(circle, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0) 70%);
+}
+#stage-viewport {
+  z-index: 1;
+}
+
+#wrap {
+  position: relative;
+  margin: 0;
+  width: 1100px;
+  height: 680px;
+  flex: 0 0 auto;
+  transform-origin: center center;
+  border-radius: 24px;
+  box-shadow: 0 30px 70px -18px rgba(190, 26, 37, 0.4), 0 0 0 1px rgba(255,255,255,0.5) inset, 0 0 90px rgba(255,120,140,0.25);
+  background:
+    radial-gradient(circle at 50% 100%, rgba(255, 214, 220, 0.6) 0%, rgba(255,255,255,0) 60%),
+    linear-gradient(180deg, #fffafb 0%, #fff1f3 100%);
+}
+#text {
+  width: 272px;
+  height: 560px;
+  left: 188px;
+  top: 80px;
+  position: absolute;
+}
+#code {
+  display: none;
+  color: #6a1420;
+  font-size: 16px;
+  margin-top: 70px;
+  line-height: 27px;
+  font-size: larger;
+  font-weight: bolder;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+}
+#clock-box {
+  position: absolute;
+  left: 60px;
+  top: 550px;
+  font-size: 28px;
+  display: none;
+  color: #b81a25;
+}
+#clock-box a {
+  font-size: 28px;
+  text-decoration: none;
+  color: #b81a25;
+}
+#clock {
+  margin-left: 48px;
+}
+#clock .digit {
+  font-size: 64px;
+}
+#canvas {
+  margin: 0 auto;
+  width: 1100px;
+  height: 680px;
+  border-radius: 18px;
+}
+#error {
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 60px;
+  display: none;
+}
+.hand {
+  cursor: pointer;
+}
+.say {
+  margin-left: 5px;
+}
+.space {
+  margin-right: 150px;
+}
+
+#message-box{
+  position: absolute;
+  margin-top:450px;
+  font-size: 25px;
+  font-family: monospace;
+
+}
+/* tree-only view: no card, bigger tree */
+#wrap { box-shadow: none !important; background: none !important; border-radius: 0; }
+#main { overflow: hidden; }
+
+/* title shown after the tree */
+#main { padding-top: 0; }
+#title {
+  position: absolute; top: 0; left: 0; right: 0; z-index: 5;
+  padding: 18px 16px 0; text-align: center; pointer-events: none;
+  opacity: 0; transform: translateY(-8px); transition: opacity 1.6s ease, transform 1.6s ease;
+}
+#title.show { opacity: 1; transform: none; }
+#title .kicker {
+  font-size: clamp(9px, 2.6vw, 12px); letter-spacing: 0.14em; text-transform: uppercase;
+  color: #1c1a17; opacity: 0.45; margin-bottom: 8px;
+}
+#title h1 {
+  margin: 0; color: #1c1a17; font-weight: 600; letter-spacing: -0.02em; line-height: 1;
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-size: clamp(34px, 11vw, 76px);
+}
+
+/* ---- scrolling page ---- */
+html, body { height: auto; overflow-x: hidden; overflow-y: auto; }
+#main { height: 100vh; height: 100svh; }
+#canvas { touch-action: pan-y; }
+#hint {
+  position: absolute; top: calc(100vh - 44px); top: calc(100svh - 44px); left: 0; right: 0; height: 44px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  font-size: 13px; color: #1c1a17; opacity: 0.6; z-index: 5; pointer-events: none;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+#hint span { font-size: 14px; animation: nudge 1.6s ease-in-out infinite; }
+@keyframes nudge { 0%,100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }
+
+#letter {
+  position: relative; z-index: 6; color: #4a4540;
+  background: linear-gradient(180deg, rgba(244,240,233,0) 0, #f4f0e9 140px);
+  padding: 120px 0 90px; margin-top: -60px;
+}
+#letter .inner { max-width: 680px; margin: 0 auto; padding: 0 24px; }
+#letter h1, #letter h2, #letter h3 { font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif; color: #1c1a17; font-weight: 500; letter-spacing: -0.02em; }
+#letter h1 { font-size: clamp(44px, 13vw, 80px); line-height: 1; margin: 0 0 32px; }
+#letter p { font-size: 16px; line-height: 2; margin: 0 0 20px; color: #4a4540; }
+#letter p.small { font-size: 13px; color: #756f68; line-height: 1.8; }
+#letter hr { border: 0; border-top: 1px solid #d8d2c8; margin: 36px 0; }
+#letter h2 { font-size: clamp(34px, 10vw, 56px); line-height: 1.1; margin: 0; }
+#letter .keep { font-size: 12px; letter-spacing: 0.1em; color: #1c1a17; margin: 44px 0 50px; }
+#letter h3 { font-size: clamp(26px, 7.5vw, 40px); line-height: 1.25; margin: 0; font-style: italic; }
+.rv { opacity: 0; transform: translateY(18px); transition: opacity 0.9s ease, transform 0.9s ease; }
+.rv.in { opacity: 1; transform: none; }
+
+#letter .clar { text-align: center; margin: 0 0 70px; }
+#letter .clar .kick { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #756f68; margin-bottom: 26px; }
+#letter .clar h4 { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(26px, 7vw, 36px); color: #4a4540; margin: 0 0 30px; }
+#letter .clar .short { width: 44px; height: 1px; background: #cfc8bc; margin: 0 auto 36px; }
+#letter .clar p { margin: 0 0 26px; }
+#letter .clar p.small { margin-top: 36px; }
+
+/* ---- 06 / Finally ---- */
+#letter .fin { text-align: center; margin: 90px 0 0; }
+#letter .fin .kick { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #756f68; margin-bottom: 26px; }
+#letter .fin h5 { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-weight: 500; font-size: clamp(22px, 6vw, 32px); line-height: 1.3; color: #4a4540; margin: 0 0 34px; }
+#letter .fin .big { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; color: #1c1a17; letter-spacing: -0.04em; line-height: 1; font-size: clamp(64px, 20vw, 130px); margin: 0 0 30px; }
+#letter .fin .hi { font-size: 18px; color: #4a4540; margin: 0 0 40px; }
+#letter .fin .shot { display: block; max-width: 100%; height: auto; margin: 0 auto; border-radius: 10px; box-shadow: 0 10px 30px -12px rgba(28,26,23,0.3); }
+
+#petals { position: absolute; left: 0; top: 0; width: 1100px; height: 680px; pointer-events: none; }
